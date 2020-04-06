@@ -11,7 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "login",
+      page: "map",
     };
   }
 
@@ -32,7 +32,7 @@ class App extends Component {
                   {this.state.page === "profile" && <Profile />}
                 </>
               ) : (
-                <>{this.state.page === "login" && <Login />}</>
+                <>{<Login />}</>
               )}
             </div>
           );
