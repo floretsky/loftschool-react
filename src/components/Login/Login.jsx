@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../context/AuthContext/AuthContext";
 import logo from "../../common/logo-white.svg";
 import "./Login.css";
 
@@ -16,9 +16,7 @@ export class Login extends Component {
                 </div>
                 <div className="col col-md-6 column-login-form">
                   <form>
-                    <p>
-                      <h1>Login</h1>
-                    </p>
+                    <h1>Login</h1>
                     <p>
                       New user? <a href="./">Sign up.</a>
                     </p>
@@ -26,7 +24,7 @@ export class Login extends Component {
                       <input
                         type="text"
                         name="username"
-                        placeholder="Enter username"
+                        placeholder="Enter username *"
                         required
                       />
                     </p>
@@ -34,14 +32,14 @@ export class Login extends Component {
                       <input
                         type="password"
                         name="password"
-                        placeholder="Enter password"
+                        placeholder="Enter password *"
                         required
                       />
                     </p>
                     <p className="container sign-in-button-containter">
                       <a
                         href="#login"
-                        class="button accent-button"
+                        className="button accent-button"
                         onClick={values.login}
                       >
                         Sign in

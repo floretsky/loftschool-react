@@ -17,6 +17,7 @@
 }
 .login-form {
   height: 100%;
+  margin: auto!important;
 }
 .sign-in-button-containter {
   text-align: right;
