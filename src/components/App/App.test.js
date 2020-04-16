@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import App from "./App";
 import { Header } from "../Header/Header";
-import { shallow, configure, mount } from "enzyme";
+import { shallow, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 jest.mock("mapbox-gl/dist/mapbox-gl", () => ({
@@ -23,9 +23,6 @@ describe("App", () => {
     const headerComponent = shallow(<Header switchPage={mockCallBack} />);
     headerComponent.find(".profile-button").simulate("click", "profile");
     headerComponent.find(".profile-button").simulate("click", "map");
-
-    App.prototype.switchPageMethod = mockCallBack;
-    jest.spyOn(App.prototype, "switchPageMethod");
-    expect(App.prototype.switchPageMethod).toHaveBeenCalledTimes(2);
+    expect(mockCallBack).toHaveBeenCalledTimes(2);
   });
 });

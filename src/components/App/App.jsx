@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useContext, useState } from "react";
 import { Login } from "../Login/Login";
 import { Profile } from "../Profile/Profile";
 import { Map } from "../Map/Map";
@@ -7,39 +7,28 @@ import { AuthContext } from "../context/AuthContext/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: "map",
-    };
-  }
+const App = (props) => {
+  const auth = useContext(AuthContext);
 
-  switchPage = (currentPage) => {
-    this.setState({ page: currentPage });
+  const [currentPage, setCurrentPage] = useState('map');
+
+  const switchPage = (page) => {
+    setCurrentPage(page);
   };
 
-  render() {
-    return (
-      <AuthContext.Consumer>
-        {(values) => {
-          return (
-            <div className="main-area" data-testid="main">
-              {values.authorized ? (
-                <>
-                  <Header switchPage={this.switchPage} />
-                  {this.state.page === "map" && <Map />}
-                  {this.state.page === "profile" && <Profile />}
-                </>
-              ) : (
-                <>{<Login />}</>
-              )}
-            </div>
-          );
-        }}
-      </AuthContext.Consumer>
-    );
-  }
-}
+  return (
+    <div className="main-area" data-testid="main">
+      {auth.authorized ? (
+        <>
+          <Header switchPage={switchPage} />
+          {currentPage && <Map />}
+          {currentPage && <Profile />}
+        </>
+      ) : (
+        <>{<Login />}</>
+      )}
+    </div>
+  );
+};
 
 export default App;
