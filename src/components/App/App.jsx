@@ -3,7 +3,7 @@ import { Login } from "../Login/Login";
 import { Profile } from "../Profile/Profile";
 import { Map } from "../Map/Map";
 import { Header } from "../Header/Header";
-import { AuthContext } from "../Login/AuthContext";
+import { AuthContext } from "../context/AuthContext/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -24,7 +24,7 @@ class App extends Component {
       <AuthContext.Consumer>
         {(values) => {
           return (
-            <div className="main-area">
+            <div className="main-area" data-testid="main">
               {values.authorized ? (
                 <>
                   <Header switchPage={this.switchPage} />

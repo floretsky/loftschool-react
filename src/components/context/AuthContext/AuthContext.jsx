@@ -1,8 +1,17 @@
 import React, { Component, createContext } from "react";
-
+import PropTypes from "prop-types";
 export const AuthContext = createContext({});
 
 export class AuthProvider extends Component {
+
+  static propTypes = {
+    switchPage: PropTypes.shape({
+      authorized: PropTypes.bool,
+      login: PropTypes.func,
+      logout: PropTypes.func
+    })
+  };
+
   state = { authorized: false };
 
   login = () => {
