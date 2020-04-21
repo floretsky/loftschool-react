@@ -1,41 +1,22 @@
-import React from "react";
-import { render } from "@testing-library/react";
-import { shallow, configure, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import { Header } from "./Header";
+import React from 'react';
+import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import configureMockStore from 'redux-mock-store';
 
-configure({ adapter: new Adapter() });
+import Header from './Header';
 
-describe("Header", () => {
-  it("shows properly", () => {
-    const { queryByTestId } = render(<Header />);
+const mockStore = configureMockStore();
+const store = mockStore({
+  auth: { isAuthorized: true },
+});
 
-    expect(queryByTestId("header")).toBeTruthy();
-  });
-
-  it("changes page", () => {
-    const props = {
-      switchPage: jest.fn(),
-    };
-
-    const component = shallow(<Header {...props} />);
-
-    expect(component.find(".map-button").prop("switchPage")).toBe(
-      component.instance().switchPage
+describe('Header', () => {
+  it('renders properly', () => {
+    const { queryByTestId } = render(
+      <Router>
+        <Header store={store} />
+      </Router>
     );
-
-    expect(component.find(".profile-button").prop("switchPage")).toBe(
-      component.instance().switchPage
-    );
-  });
-
-  it("clicks on navigation links", () => {
-    const mockCallback = jest.fn();
-    const wrapper = mount(<Header switchPage={mockCallback} />),
-      links = wrapper.find(".button:not(.logout-button)");
-    links.forEach((link) => {
-      link.simulate("click");
-    });
-    expect(mockCallback.mock.calls.length).toBe(links.length);
+    expect(queryByTestId('header')).toBeTruthy();
   });
 });

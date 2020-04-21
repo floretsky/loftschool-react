@@ -1,34 +1,21 @@
-import React, { useContext, useState } from "react";
-import { Login } from "../Login/Login";
-import { Profile } from "../Profile/Profile";
-import { Map } from "../Map/Map";
-import { Header } from "../Header/Header";
-import { AuthContext } from "../context/AuthContext/AuthContext";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-const App = (props) => {
-  const auth = useContext(AuthContext);
+import store from '../../modules/store';
+import Router from '../Router/Router';
 
-  const [currentPage, setCurrentPage] = useState('map');
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-  const switchPage = (page) => {
-    setCurrentPage(page);
-  };
-
-  return (
-    <div className="main-area" data-testid="main">
-      {auth.authorized ? (
-        <>
-          <Header switchPage={switchPage} />
-          {currentPage && <Map />}
-          {currentPage && <Profile />}
-        </>
-      ) : (
-        <>{<Login />}</>
-      )}
-    </div>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Provider store={store}>
+      <div className="main-area" data-testid="main-area">
+        <Router />
+      </div>
+    </Provider>
+  </BrowserRouter>
+);
 
 export default App;

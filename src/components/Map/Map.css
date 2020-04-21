@@ -1,10 +1,10 @@
-.map-container{
-    height: fit-content;
+.map-container {
+  height: fit-content;
 }
-.map{
-    height: 90vh;
-    width: 100%;
+.map {
+  height: 90vh;
+  width: 100%;
 }
-.mapboxgl-control-container{
-    display: none;
+.mapboxgl-control-container {
+  display: none;
 }
