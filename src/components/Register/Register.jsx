@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postLoginRequest, postLoginSuccess } from '../../modules/Auth/actions';
+import { postRegisterRequest } from '../../modules/Auth/actions';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -10,26 +10,21 @@ import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Typography from '@material-ui/core/Typography';
 
-class Login extends Component {
+class Register extends Component {
   state = {
     email: '',
+    name: '',
+    surname: '',
     password: '',
   };
-
-  componentDidMount() {
-    const { isAuthorized } = this.props;
-    if (isAuthorized) {
-      const { postLoginSuccess } = this.props;
-      postLoginSuccess({ success: true });
-    }
-  }
 
   handleChangeInput = (event) =>
     this.setState({ [event.target.name]: event.target.value });
 
-  handleSubmitForm = (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
-    this.props.postLoginRequest(this.state);
+    const { postRegisterRequest } = this.props;
+    postRegisterRequest(this.state);
   };
 
   render() {
@@ -38,15 +33,15 @@ class Login extends Component {
     return isAuthorized ? (
       <Redirect to="/map" />
     ) : (
-      <form onSubmit={this.handleSubmit}>
+      <form>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h4" paragraph>
-              Login
+              Register
             </Typography>
-            New user?{' '}
-            <a href="#register" onClick={() => changeState('register')}>
-              Sign up.
+            Already have an account?{' '}
+            <a href="#login" onClick={() => changeState('login')}>
+              Sign in.
             </a>
           </Grid>
           <Grid item xs={12}>
@@ -56,11 +51,32 @@ class Login extends Component {
               name="email"
               placeholder="Enter email *"
               onChange={this.handleChangeInput}
-              fullWidth
               autoFocus
+              fullWidth
               required
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <Input
+              error={!!error}
+              type="text"
+              name="name"
+              placeholder="First Name *"
+              onChange={this.handleChangeInput}
+              required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Input
+              error={!!error}
+              type="text"
+              name="surname"
+              placeholder="Last name *"
+              onChange={this.handleChangeInput}
+              required
+            />
+          </Grid>
+
           <Grid item xs={12}>
             <Input
               error={!!error}
@@ -80,9 +96,9 @@ class Login extends Component {
             color="primary"
             size="medium"
             variant="contained"
-            onClick={this.handleSubmitForm}
+            onClick={this.handleSubmit}
           >
-            Sign in
+            Sign up
           </Button>
         </div>
       </form>
@@ -90,7 +106,7 @@ class Login extends Component {
   }
 }
 
-Login.propTypes = {
+Register.propTypes = {
   isAuthorized: PropTypes.bool,
   error: PropTypes.string,
 };
@@ -101,8 +117,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  postLoginRequest,
-  postLoginSuccess,
+  postRegisterRequest,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

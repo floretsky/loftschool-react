@@ -1,0 +1,1 @@
+export const baseUrl = 'https://loft-taxi.glitch.me';

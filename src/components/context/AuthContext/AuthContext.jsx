@@ -1,8 +1,8 @@
-import React, { Component, createContext } from "react";
+import React, { Component, createContext } from 'react';
+
 export const AuthContext = createContext({});
 
 export class AuthProvider extends Component {
-
   state = { authorized: false };
 
   login = () => {

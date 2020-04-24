@@ -1,6 +1,6 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { AuthProvider, AuthContext } from "./AuthContext";
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import { AuthProvider, AuthContext } from './AuthContext';
 
 const mock = () => (
   <AuthProvider>
@@ -20,23 +20,23 @@ const mock = () => (
   </AuthProvider>
 );
 
-describe("AuthContext", () => {
-  it("initializes with logged out state as default", () => {
+describe('AuthContext', () => {
+  it('initializes with logged out state as default', () => {
     const { getByTestId } = render(mock());
-    expect(getByTestId("authorized").textContent).toEqual("false");
+    expect(getByTestId('authorized').textContent).toEqual('false');
   });
 
-  it("changes authorized status after performing login func", () => {
+  it('changes authorized status after performing login func', () => {
     const { getByTestId } = render(mock());
 
-    fireEvent.click(getByTestId("login"));
-    expect(getByTestId("authorized").textContent).toEqual("true");
+    fireEvent.click(getByTestId('login'));
+    expect(getByTestId('authorized').textContent).toEqual('true');
   });
 
-  it("changes authorized status after performing logout func", () => {
+  it('changes authorized status after performing logout func', () => {
     const { getByTestId } = render(mock());
 
-    fireEvent.click(getByTestId("logout"));
-    expect(getByTestId("authorized").textContent).toEqual("false");
+    fireEvent.click(getByTestId('logout'));
+    expect(getByTestId('authorized').textContent).toEqual('false');
   });
 });
