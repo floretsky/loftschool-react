@@ -1,3 +1,5 @@
+import { baseUrl } from '../../const/index';
+
 import {
   postLoginRequest,
   postLoginSuccess,
@@ -10,8 +12,7 @@ import {
 export const authMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case postLoginRequest.toString():
-      const authUrl = 'https://loft-taxi.glitch.me/auth';
-      fetch(authUrl, {
+      fetch(`${baseUrl}/auth`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
@@ -29,8 +30,7 @@ export const authMiddleware = (store) => (next) => (action) => {
         });
       break;
     case postRegisterRequest.toString():
-      const registerUrl = 'https://loft-taxi.glitch.me/register';
-      fetch(registerUrl, {
+      fetch(`${baseUrl}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),

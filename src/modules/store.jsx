@@ -9,29 +9,25 @@ import { profileReducer as profile } from './Profile/reducer';
 import { authMiddleware } from './Auth/middleware';
 import { profileMiddleware } from './Profile/middleware';
 
-export let initialState;
+export const initialState = loadState()
+  ? loadState().globalState
+  : ({
+      auth: {
+        isLoading: false,
+        isAuthorized: false,
+        error: '',
+        token: '',
+      },
 
-if (typeof loadState() !== 'undefined') {
-  initialState = loadState().globalState;
-} else {
-  initialState = {
-    auth: {
-      isLoading: false,
-      isAuthorized: false,
-      error: '',
-      token: '',
-    },
-
-    profile: {
-      isLoading: false,
-      hasCard: false,
-      cardNumber: '',
-      expiryDate: '',
-      cardName: '',
-      cvc: '',
-    },
-  };
-}
+      profile: {
+        isLoading: false,
+        hasCard: false,
+        cardNumber: '',
+        expiryDate: '',
+        cardName: '',
+        cvc: '',
+      },
+    });
 
 const reducers = combineReducers({
   auth,

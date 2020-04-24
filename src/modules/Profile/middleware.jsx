@@ -1,3 +1,5 @@
+import { baseUrl } from '../../const/index';
+
 import {
   postCardRequest,
   postCardSuccess,
@@ -10,8 +12,7 @@ import {
 export const profileMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case postCardRequest.toString():
-      const postCardUrl = 'https://loft-taxi.glitch.me/card';
-      fetch(postCardUrl, {
+      fetch(`${baseUrl}/card`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
@@ -27,8 +28,7 @@ export const profileMiddleware = (store) => (next) => (action) => {
         });
       break;
     case getCardRequest.toString():
-      const getCardUrl = `https://loft-taxi.glitch.me/card?token=${action.payload}`;
-      fetch(getCardUrl, {
+      fetch(`${baseUrl}/card?token=${action.payload}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       })
