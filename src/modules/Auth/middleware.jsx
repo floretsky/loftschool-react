@@ -6,12 +6,12 @@ import {
   postRegisterSuccess,
   postRegisterFailure,
 } from './actions';
-import { setItems, removeItems } from '../../services/LocalStorage';
 
 export const authMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case postLoginRequest.toString():
-      fetch('https://loft-taxi.glitch.me/auth', {
+      const authUrl = 'https://loft-taxi.glitch.me/auth';
+      fetch(authUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
@@ -20,23 +20,17 @@ export const authMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           if (response.success) {
             store.dispatch(postLoginSuccess(response));
-            setItems('user', {
-              email: action.payload.email,
-              password: action.payload.password,
-              token: response.token,
-            });
           } else {
             store.dispatch(postLoginFailure(response));
-            removeItems('user');
           }
         })
         .catch((error) => {
           store.dispatch(postLoginFailure(error));
-          removeItems('user');
         });
       break;
     case postRegisterRequest.toString():
-      fetch('https://loft-taxi.glitch.me/register', {
+      const registerUrl = 'https://loft-taxi.glitch.me/register';
+      fetch(registerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
@@ -46,21 +40,12 @@ export const authMiddleware = (store) => (next) => (action) => {
           console.log(action);
           if (response.success) {
             store.dispatch(postRegisterSuccess(response));
-            setItems('user', {
-              email: action.payload.email,
-              password: action.payload.password,
-              name: action.payload.name,
-              surname: action.payload.surname,
-              token: response.token,
-            });
           } else {
             store.dispatch(postRegisterFailure(response));
-            removeItems('user');
           }
         })
         .catch((error) => {
           store.dispatch(postRegisterFailure(error));
-          removeItems('user');
         });
       break;
     default:

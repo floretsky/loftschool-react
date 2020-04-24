@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from '../../common/logo-black.svg';
 
-import { removeItems } from '../../services/LocalStorage';
 import { postLogOut } from '../../modules/Auth/actions';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
@@ -13,8 +12,6 @@ import './Header.css';
 const Header = ({ postLogOut }) => {
   const handleSignOutClick = (event) => {
     event.preventDefault();
-
-    removeItems('user');
     postLogOut({ success: false, error: '' });
   };
 

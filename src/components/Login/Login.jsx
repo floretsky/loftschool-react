@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getItems } from '../../services/LocalStorage';
 import { postLoginRequest, postLoginSuccess } from '../../modules/Auth/actions';
+import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -17,10 +17,10 @@ class Login extends Component {
   };
 
   componentDidMount() {
-    let userInfo = getItems('user');
-    if (userInfo !== null) {
+    const { isAuthorized } = this.props;
+    if (isAuthorized) {
       const { postLoginSuccess } = this.props;
-      postLoginSuccess({ success: true, token: userInfo.token });
+      postLoginSuccess({ success: true });
     }
   }
 
@@ -41,7 +41,9 @@ class Login extends Component {
       <form onSubmit={this.handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h4" paragraph>Login</Typography>
+            <Typography variant="h4" paragraph>
+              Login
+            </Typography>
             New user?{' '}
             <a href="#register" onClick={() => changeState('register')}>
               Sign up.
@@ -87,6 +89,11 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  isAuthorized: PropTypes.bool,
+  error: PropTypes.string,
+};
 
 const mapStateToProps = (state) => ({
   isAuthorized: state.auth.isAuthorized,

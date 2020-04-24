@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { postCardRequest, getCardRequest } from '../../modules/Profile/actions';
 import NumberFormat from 'react-number-format';
+import PropTypes from 'prop-types';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -30,12 +31,12 @@ class Profile extends React.Component {
   componentDidUpdate(prevProps) {
     let { cardInfo } = this.props;
     if (cardInfo !== prevProps.cardInfo) {
-      this.setState({
-        cardNumber: cardInfo.cardNumber,
-        expiryDate: cardInfo.expiryDate,
-        cardName: cardInfo.cardName,
-        cvc: cardInfo.cvc,
-      });
+        this.setState({
+            cardNumber: cardInfo.cardNumber,
+            expiryDate: cardInfo.expiryDate,
+            cardName: cardInfo.cardName,
+            cvc: cardInfo.cvc,
+        });
     }
   }
 
@@ -90,6 +91,7 @@ class Profile extends React.Component {
                       autoFocus
                       fullWidth
                       required
+                      value={this.state.cardNumber}
                     />
 
                     <NumberFormat
@@ -104,6 +106,7 @@ class Profile extends React.Component {
                       onChange={this.handlerInputChange}
                       fullWidth
                       required
+                      value={this.state.expiryDate}
                     />
                   </Paper>
                 </Grid>
@@ -118,6 +121,7 @@ class Profile extends React.Component {
                       onChange={this.handlerInputChange}
                       fullWidth
                       required
+                      value={this.state.cardName}
                     />
                     <NumberFormat
                       customInput={TextField}
@@ -132,6 +136,7 @@ class Profile extends React.Component {
                       onChange={this.handlerInputChange}
                       fullWidth
                       required
+                      value={this.state.cvc}
                     />
                   </Paper>
                 </Grid>
@@ -154,9 +159,19 @@ class Profile extends React.Component {
   }
 }
 
+Profile.propTypes = {
+  token: PropTypes.string,
+  cardInfo: PropTypes.shape({
+    cardNumber: PropTypes.string,
+    expiryDate: PropTypes.string,
+    cardName: PropTypes.string,
+    cvc: PropTypes.string,
+  }),
+};
+
 const mapStateToProps = (state) => ({
   token: state.auth.token,
-  cardInfo: state.card,
+  cardInfo: state.profile,
 });
 
 const mapDispatchToProps = {

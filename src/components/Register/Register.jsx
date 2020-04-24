@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postRegisterRequest } from '../../modules/Auth/actions';
+import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -104,6 +105,11 @@ class Register extends Component {
     );
   }
 }
+
+Register.propTypes = {
+  isAuthorized: PropTypes.bool,
+  error: PropTypes.string,
+};
 
 const mapStateToProps = (state) => ({
   isAuthorized: state.auth.isAuthorized,
