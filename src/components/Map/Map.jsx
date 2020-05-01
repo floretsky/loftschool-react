@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import Order from '../Order/Order.jsx';
 import { drawRoute } from './drawRoute';
@@ -50,10 +49,12 @@ const Map = ({ coords, isOrdered, clearRoute }) => {
   return (
     <>
       <div className="map-container">
-        <Router>
-          <Order reset={reset} isOrdered={isOrdered} />
-        </Router>
-        <div className="map" data-testid='map' ref={(el) => (mapRefContainer.current = el)}></div>
+        <Order reset={reset} isOrdered={isOrdered} />
+        <div
+          className="map"
+          data-testid="map"
+          ref={(el) => (mapRefContainer.current = el)}
+        ></div>
       </div>
     </>
   );

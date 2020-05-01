@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
 import OrderForm from './OrderForm';
@@ -9,6 +9,12 @@ import OrderForm from './OrderForm';
 import './Order.css';
 
 const Order = ({ hasCard, isOrdered, reset }) => {
+  const history = useHistory();
+
+  const handleRouteClick = () => {
+    history.push('/profile');
+  };
+
   const handleClick = () => {
     reset();
   };
@@ -34,8 +40,7 @@ const Order = ({ hasCard, isOrdered, reset }) => {
               size="medium"
               variant="contained"
               fullWidth
-              component={Link}
-              to="/profile"
+              onClick={handleRouteClick}
             >
               Go to profile
             </Button>
@@ -91,4 +96,4 @@ const mapStateToProps = (state) => ({
   hasCard: state.profile.hasCard,
 });
 
-export default withRouter(connect(mapStateToProps, null)(Order));
+export default connect(mapStateToProps, null)(Order);
