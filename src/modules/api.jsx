@@ -24,6 +24,6 @@ export const putCard = async (payload) => await postApi('card', payload);
 export const getCard = async (payload) =>
   await getApi('card', `token=${payload}`);
 export const getAddressList = async () => await getApi('addressList');
-export const getRoute = async ({ address1, address2 }) => {
-  return await getApi('route', `address1=${address1}&address2=${address2}`);
+export const getRoute = async ({ routeFrom, routeTo }) => {
+  return await getApi('route', `address1=${routeFrom}&address2=${routeTo}`);
 };

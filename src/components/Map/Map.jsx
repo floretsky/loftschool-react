@@ -11,7 +11,7 @@ import { clearRoute } from '../../modules/Route/actions';
 import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const Map = ({ coords, isOrdered, clearRoute }) => {
+const Map = ({ coords, isOrdered, clearRoute, history }) => {
   const [map, setMap] = useState(null);
   const mapRefContainer = useRef(null);
 
@@ -49,10 +49,10 @@ const Map = ({ coords, isOrdered, clearRoute }) => {
   return (
     <>
       <div className="map-container">
-        <Order reset={reset} isOrdered={isOrdered} />
+        <Order history={history} reset={reset} isOrdered={isOrdered} />
         <div
-          className="map"
           data-testid="map"
+          className="map"
           ref={(el) => (mapRefContainer.current = el)}
         ></div>
       </div>

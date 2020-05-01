@@ -10,11 +10,6 @@ import './Order.css';
 
 const Order = ({ hasCard, isOrdered, reset }) => {
   const history = useHistory();
-
-  const handleRouteClick = () => {
-    history.push('/profile');
-  };
-
   const handleClick = () => {
     reset();
   };
@@ -40,7 +35,9 @@ const Order = ({ hasCard, isOrdered, reset }) => {
               size="medium"
               variant="contained"
               fullWidth
-              onClick={handleRouteClick}
+              onClick={() => {
+                history.push('/profile');
+              }}
             >
               Go to profile
             </Button>

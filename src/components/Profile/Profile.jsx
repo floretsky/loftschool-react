@@ -27,9 +27,8 @@ class Profile extends React.Component {
       : '',
     cardName: this.props.cardInfo.cardName ? this.props.cardInfo.cardName : '',
     cvc: this.props.cardInfo.cvc ? this.props.cardInfo.cvc : '',
+    hasCard: this.props.cardInfo.hasCard ? this.props.cardInfo.hasCard : false,
   };
-
-  hasCard = this.props.cardInfo.hasCard ? this.props.cardInfo.hasCard : false;
 
   componentDidMount() {
     this.setState({ token: this.props.token });
@@ -41,12 +40,12 @@ class Profile extends React.Component {
     e.preventDefault();
     const { postCardRequest } = this.props;
     postCardRequest(this.state);
-    this.hasCard = this.props.cardInfo.hasCard;
+    this.setState({ hasCard: true });
   };
 
   handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-    this.hasCard = false;
+    this.setState({ hasCard: false });
   };
 
   render() {
@@ -142,8 +141,8 @@ class Profile extends React.Component {
                 </Grid>
               </Grid>
               <div className="button-containter text-center">
-                <FormHelperText error={!this.hasCard}>
-                  {this.hasCard
+                <FormHelperText error={!this.state.hasCard}>
+                  {this.state.hasCard
                     ? 'Everything is fine'
                     : 'Please enter your card number'}
                 </FormHelperText>
