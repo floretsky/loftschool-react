@@ -1,17 +1,18 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import throttle from 'lodash/throttle';
+import createSagaMiddleware from 'redux-saga';
 
 import { saveState, loadState } from '../services/LocalStorage';
 
 import { authReducer as auth } from './Auth/reducer';
 import { profileReducer as profile } from './Profile/reducer';
+import { routeReducer as route } from './Route/reducer';
 
-import { authMiddleware } from './Auth/middleware';
-import { profileMiddleware } from './Profile/middleware';
+import { rootSaga } from './rootSaga';
 
 export const initialState = loadState()
   ? loadState().globalState
-  : ({
+  : {
       auth: {
         isLoading: false,
         isAuthorized: false,
@@ -27,19 +28,27 @@ export const initialState = loadState()
         cardName: '',
         cvc: '',
       },
-    });
+
+      route: {
+        addresses: [],
+        coords: [],
+        isOrdered: false,
+      },
+    };
+
+const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
   auth,
   profile,
+  route,
 });
 
 const store = createStore(
   reducers,
   initialState,
   compose(
-    applyMiddleware(authMiddleware),
-    applyMiddleware(profileMiddleware),
+    applyMiddleware(sagaMiddleware),
     window.__REDUX_DEVTOOLS_EXTENSION__
       ? window.__REDUX_DEVTOOLS_EXTENSION__()
       : (noop) => noop
@@ -53,5 +62,7 @@ store.subscribe(
     });
   }, 1000)
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default store;

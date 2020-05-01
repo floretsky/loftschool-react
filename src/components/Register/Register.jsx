@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postRegisterRequest } from '../../modules/Auth/actions';
 import PropTypes from 'prop-types';
 
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Typography from '@material-ui/core/Typography';
+import {
+  Button,
+  Grid,
+  Input,
+  FormHelperText,
+  Typography,
+} from '@material-ui/core';
+
+import { postRegisterRequest } from '../../modules/Auth/actions';
 
 class Register extends Component {
   state = {

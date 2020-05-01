@@ -1,26 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { postCardRequest, getCardRequest } from '../../modules/Profile/actions';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import logo from '../../common/mastercard.svg';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import {
+  Paper,
+  Grid,
+  Button,
+  Typography,
+  TextField,
+  FormHelperText,
+} from '@material-ui/core';
 
+import { postCardRequest, getCardRequest } from '../../modules/Profile/actions';
+
+import logo from '../../common/mastercard.svg';
 import './Profile.css';
 
 class Profile extends React.Component {
   state = {
-    token: '',
-    cardNumber: '',
-    expiryDate: '',
-    cardName: '',
-    cvc: '',
+    cardNumber: this.props.cardInfo.cardNumber
+      ? this.props.cardInfo.cardNumber
+      : '',
+    expiryDate: this.props.cardInfo.expiryDate
+      ? this.props.cardInfo.expiryDate
+      : '',
+    cardName: this.props.cardInfo.cardName ? this.props.cardInfo.cardName : '',
+    cvc: this.props.cardInfo.cvc ? this.props.cardInfo.cvc : '',
   };
+
+  hasCard = this.props.cardInfo.hasCard ? this.props.cardInfo.hasCard : false;
 
   componentDidMount() {
     this.setState({ token: this.props.token });
@@ -28,26 +37,17 @@ class Profile extends React.Component {
     getCardRequest(this.props.token);
   }
 
-  componentDidUpdate(prevProps) {
-    let { cardInfo } = this.props;
-    if (cardInfo !== prevProps.cardInfo) {
-        this.setState({
-            cardNumber: cardInfo.cardNumber,
-            expiryDate: cardInfo.expiryDate,
-            cardName: cardInfo.cardName,
-            cvc: cardInfo.cvc,
-        });
-    }
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
     const { postCardRequest } = this.props;
     postCardRequest(this.state);
+    this.hasCard = this.props.cardInfo.hasCard;
   };
 
-  handlerInputChange = (event) =>
+  handleInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+    this.hasCard = false;
+  };
 
   render() {
     return (
@@ -87,11 +87,11 @@ class Profile extends React.Component {
                       label="Card Number:"
                       placeholder="0000 0000 0000 0000"
                       format="#### #### #### ####"
-                      onChange={this.handlerInputChange}
+                      onChange={this.handleInputChange}
                       autoFocus
                       fullWidth
                       required
-                      value={this.state.cardNumber}
+                      value={this.state.cardNumber || ''}
                     />
 
                     <NumberFormat
@@ -103,10 +103,10 @@ class Profile extends React.Component {
                       format="##/##"
                       mask={['M', 'M', 'Y', 'Y']}
                       placeholder="04/20"
-                      onChange={this.handlerInputChange}
+                      onChange={this.handleInputChange}
                       fullWidth
                       required
-                      value={this.state.expiryDate}
+                      value={this.state.expiryDate || ''}
                     />
                   </Paper>
                 </Grid>
@@ -118,10 +118,10 @@ class Profile extends React.Component {
                       label="Cardholder name:"
                       id="cardName"
                       placeholder="USER NAME"
-                      onChange={this.handlerInputChange}
+                      onChange={this.handleInputChange}
                       fullWidth
                       required
-                      value={this.state.cardName}
+                      value={this.state.cardName || ''}
                     />
                     <NumberFormat
                       customInput={TextField}
@@ -133,15 +133,20 @@ class Profile extends React.Component {
                       inputProps={{
                         maxLength: 3,
                       }}
-                      onChange={this.handlerInputChange}
+                      onChange={this.handleInputChange}
                       fullWidth
                       required
-                      value={this.state.cvc}
+                      value={this.state.cvc || ''}
                     />
                   </Paper>
                 </Grid>
               </Grid>
               <div className="button-containter text-center">
+                <FormHelperText error={!this.hasCard}>
+                  {this.hasCard
+                    ? 'Everything is fine'
+                    : 'Please enter your card number'}
+                </FormHelperText>
                 <Button
                   type="submit"
                   size="medium"
@@ -166,6 +171,7 @@ Profile.propTypes = {
     expiryDate: PropTypes.string,
     cardName: PropTypes.string,
     cvc: PropTypes.string,
+    hasCard: PropTypes.bool,
   }),
 };
 
