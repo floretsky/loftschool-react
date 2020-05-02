@@ -1,0 +1,18 @@
+.paper-container {
+  padding: 44px 50px;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  top: 0;
+  left: 20px;
+  position: absolute;
+  max-width: 30%;
+  z-index: 1;
+}
+
+a.button-link:hover {
+  color: #000;
+}
+
+.route-input {
+  width: 230px;
+}

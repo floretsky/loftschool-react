@@ -1,5 +1,6 @@
 .map-container {
   height: fit-content;
+  position: relative;
 }
 .map {
   height: 90vh;

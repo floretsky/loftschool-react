@@ -1,18 +1,21 @@
 import React from 'react';
-import logo from '../../common/logo-black.svg';
-
-import { postLogOut } from '../../modules/Auth/actions';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
+import { postLogOut } from '../../modules/Auth/actions';
+import { clearCard } from '../../modules/Profile/actions';
+import { clearRoute } from '../../modules/Route/actions';
 
+import Button from '@material-ui/core/Button';
+import logo from '../../common/logo-black.svg';
 import './Header.css';
 
-const Header = ({ postLogOut }) => {
+const Header = ({ postLogOut, clearCard, clearRoute }) => {
   const handleSignOutClick = (event) => {
     event.preventDefault();
     postLogOut({ success: false, error: '' });
+    clearCard();
+    clearRoute();
   };
 
   return (
@@ -48,6 +51,8 @@ const Header = ({ postLogOut }) => {
 
 const mapDispatchToProps = {
   postLogOut,
+  clearCard,
+  clearRoute,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Header));
