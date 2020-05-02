@@ -6,7 +6,7 @@ import mapboxgl from 'mapbox-gl';
 import Order from '../Order/Order.jsx';
 import { drawRoute } from './drawRoute';
 import { clearRoute } from '../../modules/Route/actions';
-import { ACCESSTOKEN } from '../../const/index';
+import { ACCESS_TOKEN } from '../../const/index';
 
 import './Map.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -18,7 +18,7 @@ const Map = ({ coords, isOrdered, clearRoute, history }) => {
   useEffect(() => {
     const initializeMap = ({ setMap, mapRefContainer }) => {
       const map = new mapboxgl.Map({
-        accessToken: ACCESSTOKEN,
+        accessToken: ACCESS_TOKEN,
         style: 'mapbox://styles/mapbox/light-v10',
         container: mapRefContainer.current,
         zoom: [15],
