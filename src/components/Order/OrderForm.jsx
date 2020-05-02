@@ -2,14 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-  Grid,
-  Button,
-  InputLabel,
-  FormControl,
-  Select,
-  MenuItem,
-} from '@material-ui/core';
+import Select from 'react-select';
+import { Grid, Button, InputLabel, FormControl } from '@material-ui/core';
 
 import { getRouteRequest } from '../../modules/Route/actions';
 
@@ -24,14 +18,6 @@ const OrderForm = ({ getRouteRequest, addresses }) => {
     getRouteRequest({ routeFrom, routeTo });
   };
 
-  const handleFrom = (event) => {
-    setFrom(event.target.value);
-  };
-
-  const handleTo = (event) => {
-    setTo(event.target.value);
-  };
-
   return (
     <form id="search-form" data-testid="search-form" onSubmit={handleSubmit}>
       <Grid container spacing={2} direction="column">
@@ -42,14 +28,12 @@ const OrderForm = ({ getRouteRequest, addresses }) => {
               className="route-input"
               name="routeFrom"
               value={routeFrom || ''}
-              onChange={handleFrom}
-              children={addresses
-                .filter((item) => (routeTo ? item !== routeTo : true))
-                .map((item, index) => (
-                  <MenuItem key={index} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
+              onChange={setFrom}
+              options={addresses
+                .filter((item) =>
+                  routeTo.value ? item !== routeTo.value : true
+                )
+                .map((item, index) => ({ value: item, label: item }))}
             />
           </FormControl>
         </Grid>
@@ -60,14 +44,12 @@ const OrderForm = ({ getRouteRequest, addresses }) => {
               className="route-input"
               name="routeTo"
               value={routeTo || ''}
-              onChange={handleTo}
-              children={addresses
-                .filter((item) => (routeFrom ? item !== routeFrom : true))
-                .map((item, index) => (
-                  <MenuItem key={index} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
+              onChange={setTo}
+              options={addresses
+                .filter((item) =>
+                  routeFrom.value ? item !== routeFrom.value : true
+                )
+                .map((item, index) => ({ value: item, label: item }))}
             />
           </FormControl>
         </Grid>

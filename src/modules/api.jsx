@@ -1,7 +1,7 @@
-import { baseUrl } from '../const/index';
+import { BASEURL } from '../const/index';
 
 const postApi = async (action, data) => {
-  const response = await fetch(`${baseUrl}/${action}`, {
+  const response = await fetch(`${BASEURL}/${action}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ const postApi = async (action, data) => {
 };
 
 const getApi = async (action, data = {}) => {
-  const response = await fetch(`${baseUrl}/${action}?${data}`);
+  const response = await fetch(`${BASEURL}/${action}?${data}`);
   return await response.json();
 };
 

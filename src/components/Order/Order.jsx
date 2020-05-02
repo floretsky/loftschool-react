@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
 import OrderForm from './OrderForm';
@@ -9,7 +9,6 @@ import OrderForm from './OrderForm';
 import './Order.css';
 
 const Order = ({ hasCard, isOrdered, reset }) => {
-  const history = useHistory();
   const handleClick = () => {
     reset();
   };
@@ -35,9 +34,8 @@ const Order = ({ hasCard, isOrdered, reset }) => {
               size="medium"
               variant="contained"
               fullWidth
-              onClick={() => {
-                history.push('/profile');
-              }}
+              component={RouterLink}
+              to="/profile"
             >
               Go to profile
             </Button>
@@ -87,6 +85,7 @@ const Order = ({ hasCard, isOrdered, reset }) => {
 Order.propTypes = {
   isOrdered: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
+  hasCard: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

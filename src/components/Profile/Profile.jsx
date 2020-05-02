@@ -19,15 +19,11 @@ import './Profile.css';
 
 class Profile extends React.Component {
   state = {
-    cardNumber: this.props.cardInfo.cardNumber
-      ? this.props.cardInfo.cardNumber
-      : '',
-    expiryDate: this.props.cardInfo.expiryDate
-      ? this.props.cardInfo.expiryDate
-      : '',
-    cardName: this.props.cardInfo.cardName ? this.props.cardInfo.cardName : '',
-    cvc: this.props.cardInfo.cvc ? this.props.cardInfo.cvc : '',
-    hasCard: this.props.cardInfo.hasCard ? this.props.cardInfo.hasCard : false,
+    cardNumber: this.props.cardInfo.cardNumber || '',
+    expiryDate: this.props.cardInfo.expiryDate || '',
+    cardName: this.props.cardInfo.cardName || '',
+    cvc: this.props.cardInfo.cvc || '',
+    hasCard: this.props.cardInfo.hasCard || false,
   };
 
   componentDidMount() {
