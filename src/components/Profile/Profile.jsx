@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
+import { Form, Field } from 'react-final-form';
+import formatStringByPattern from 'format-string-by-pattern';
 
 import { postCardRequest, getCardRequest } from '../../modules/Profile/actions';
 
-import { Grid, Button, Typography, TextField } from '@material-ui/core';
+import { Grid, Button, Typography } from '@material-ui/core';
 import {
   StyledPaper,
   StyledIconContainer,
@@ -18,6 +19,7 @@ import {
   StyledColumnForm,
 } from '../App/StyledApp';
 
+import { ProfileInput } from '../Input/ProfileInput';
 import logo from '../../common/mastercard.svg';
 
 class Profile extends React.Component {
@@ -27,6 +29,21 @@ class Profile extends React.Component {
     cardName: this.props.cardInfo.cardName || '',
     cvc: this.props.cardInfo.cvc || '',
     hasCard: this.props.cardInfo.hasCard || false,
+  };
+
+  formatCard = (value) => {
+    const onlyNumbers = value.replace(/[^\d]/g, '');
+    return formatStringByPattern('9999 9999 9999 9999', onlyNumbers);
+  };
+
+  formatExpiryDate = (value) => {
+    const onlyNumbers = value.replace(/[^\d]/g, '');
+    return formatStringByPattern('MM/YY', onlyNumbers);
+  };
+
+  formatCvc = (value) => {
+    const onlyNumbers = value.replace(/[^\d]/g, '');
+    return formatStringByPattern('999', onlyNumbers);
   };
 
   componentDidMount() {
@@ -47,114 +64,133 @@ class Profile extends React.Component {
     this.setState({ hasCard: false });
   };
 
+  validate = (values) => {
+    const errors = {};
+
+    if (!values.cardNumber) {
+      errors.cardNumber = 'Please enter your card number';
+    }
+
+    if (!values.expiryDate) {
+      errors.expiryDate = 'Please enter your expiry date';
+    }
+
+    if (!values.cardName) {
+      errors.cardName = 'Please enter your card name';
+    }
+
+    if (!values.cvc) {
+      errors.cvc = 'Please enter your CVC';
+    }
+
+    return errors;
+  };
+
   render() {
     return (
       <StyledBackgroundContainer>
         <StyledFormWithBackground className="container row align-items-center justify-content-center">
           <StyledColumnForm className="col col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-0">
-            <form onSubmit={this.handleSubmit}>
-              <Grid
-                container
-                spacing={3}
-                alignContent="center"
-                justify="center"
-              >
-                <Grid item xs={12}>
-                  <Typography align="center" variant="h4">
-                    Profile
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    align="center"
-                    variant="body1"
-                    paragraph
+            <Form
+              initialValues={this.props.cardInfo}
+              onSubmit={this.handleSubmit}
+              validate={this.validate}
+              render={() => (
+                <form onSubmit={this.handleSubmit}>
+                  <Grid
+                    container
+                    spacing={3}
+                    alignContent="center"
+                    justify="center"
                   >
-                    Payment Method
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <StyledPaper elevation={3}>
-                    <StyledIconContainer>
-                      <img src={logo} alt="Mastercard" width="32" />
-                    </StyledIconContainer>
-                    <NumberFormat
-                      customInput={TextField}
-                      type="text"
-                      name="cardNumber"
-                      id="cardNumber"
-                      label="Card Number:"
-                      placeholder="0000 0000 0000 0000"
-                      format="#### #### #### ####"
-                      onChange={this.handleInputChange}
-                      autoFocus
-                      fullWidth
-                      required
-                      value={this.state.cardNumber || ''}
-                    />
-
-                    <NumberFormat
-                      customInput={TextField}
-                      type="text"
-                      name="expiryDate"
-                      id="expiryDate"
-                      label="Expiration Date:"
-                      format="##/##"
-                      mask={['M', 'M', 'Y', 'Y']}
-                      placeholder="04/20"
-                      onChange={this.handleInputChange}
-                      fullWidth
-                      required
-                      value={this.state.expiryDate || ''}
-                    />
-                  </StyledPaper>
-                </Grid>
-                <Grid item xs={6}>
-                  <StyledPaper elevation={3}>
-                    <TextField
-                      type="text"
-                      name="cardName"
-                      label="Cardholder name:"
-                      id="cardName"
-                      placeholder="USER NAME"
-                      onChange={this.handleInputChange}
-                      fullWidth
-                      required
-                      value={this.state.cardName || ''}
-                    />
-                    <NumberFormat
-                      customInput={TextField}
-                      type="password"
-                      name="cvc"
-                      id="cvc"
-                      label="CVC:"
-                      placeholder="CVC"
-                      inputProps={{
-                        maxLength: 3,
-                      }}
-                      onChange={this.handleInputChange}
-                      fullWidth
-                      required
-                      value={this.state.cvc || ''}
-                    />
-                  </StyledPaper>
-                </Grid>
-              </Grid>
-              <StyledButtonContainer>
-                <StyledFormHelperText error={!this.state.hasCard}>
-                  {this.state.hasCard
-                    ? 'Everything is fine'
-                    : 'Please enter your card number'}
-                </StyledFormHelperText>
-                <Button
-                  type="submit"
-                  size="medium"
-                  variant="contained"
-                  color="primary"
-                >
-                  Save
-                </Button>
-              </StyledButtonContainer>
-            </form>
+                    <Grid item xs={12}>
+                      <Typography align="center" variant="h4">
+                        Profile
+                      </Typography>
+                      <Typography
+                        color="textSecondary"
+                        align="center"
+                        variant="body1"
+                        paragraph
+                      >
+                        Payment Method
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <StyledPaper elevation={3}>
+                        <StyledIconContainer>
+                          <img src={logo} alt="Mastercard" width="32" />
+                        </StyledIconContainer>
+                        <Field
+                          component={ProfileInput}
+                          type="text"
+                          name="cardNumber"
+                          label="Card Number:"
+                          placeholder="0000 0000 0000 0000"
+                          parse={this.formatCard}
+                          onChange={this.handleInputChange}
+                          autoFocus
+                          required
+                        />
+                        <Field
+                          component={ProfileInput}
+                          type="text"
+                          name="expiryDate"
+                          label="Expiration Date:"
+                          placeholder="04/20"
+                          parse={this.formatExpiryDate}
+                          onChange={this.handleInputChange}
+                          required
+                        />
+                      </StyledPaper>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <StyledPaper elevation={3}>
+                        <Field
+                          component={ProfileInput}
+                          type="text"
+                          name="cardName"
+                          label="Cardholder name:"
+                          placeholder="USER NAME"
+                          onChange={this.handleInputChange}
+                          required
+                        />
+                        <Field
+                          component={ProfileInput}
+                          type="password"
+                          name="cvc"
+                          label="CVC:"
+                          placeholder="CVC"
+                          parse={this.formatCvc}
+                          inputProps={{
+                            maxLength: 3,
+                          }}
+                          onChange={this.handleInputChange}
+                          required
+                        />
+                      </StyledPaper>
+                    </Grid>
+                  </Grid>
+                  <StyledButtonContainer>
+                    <StyledFormHelperText error={!!this.props.error}>
+                      {this.props.error
+                        ? this.props.error
+                        : this.state.hasCard
+                        ? 'Everything is fine'
+                        : 'Please enter your card number'}
+                    </StyledFormHelperText>
+                    <Button
+                      type="submit"
+                      size="medium"
+                      variant="contained"
+                      color="primary"
+                    >
+                      Save
+                    </Button>
+                  </StyledButtonContainer>
+                </form>
+              )}
+            />
           </StyledColumnForm>
         </StyledFormWithBackground>
       </StyledBackgroundContainer>

@@ -6355,6 +6355,11 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+format-string-by-pattern@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/format-string-by-pattern/-/format-string-by-pattern-1.2.1.tgz#ecaf437a0a504e986510dde6ae6438998fd26387"
+  integrity sha512-x7JY+q8XvBmHCf4ZSQiiG+8fmC02oiei1JoAsUcdHcy8Kn6LwaE1KUlQ8ph3fNnIcWY65B3aVuKArdbAEQxpLg==
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -10477,7 +10482,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -10757,11 +10762,6 @@ react-final-form@^6.4.0:
     "@babel/runtime" "^7.9.2"
     ts-essentials "^6.0.3"
 
-react-hook-form@^5.6.1:
-  version "5.6.1"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-5.6.1.tgz#8b6017ec01731bde4f6a6bcd94955ff5e69e28cc"
-  integrity sha512-pqlAiWyZqngdEVUinxPSmhs9k2L/ETsTf8LU7wfwrE1bXJnslRsb4aKlYiL2z0bgGrCuksN8el5bxFbnR1/qEA==
-
 react-input-autosize@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.2.tgz#fcaa7020568ec206bc04be36f4eb68e647c4d8c2"
@@ -10922,6 +10922,13 @@ react-test-renderer@^16.0.0-0, react-test-renderer@^16.13.1:
     prop-types "^15.6.2"
     react-is "^16.8.6"
     scheduler "^0.19.1"
+
+react-text-mask@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.4.3.tgz#991efb4299e30c2e6c2c46d13f617169463e0d2d"
+  integrity sha1-mR77QpnjDC5sLEbRP2FxaUY+DS0=
+  dependencies:
+    prop-types "^15.5.6"
 
 react-transition-group@^4.0.0, react-transition-group@^4.3.0:
   version "4.3.0"

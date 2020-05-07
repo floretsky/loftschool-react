@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 
-import { Paper, Button } from '@material-ui/core';
+import { Paper, Button, TextField } from '@material-ui/core';
 import Select from 'react-select';
+
+export const StyledTextField = styled(TextField)`
+  & > p {
+    bottom: -1.5em;
+  }
+`;
 
 export const StyledPaper = styled(Paper)`
   padding: 44px 50px;
