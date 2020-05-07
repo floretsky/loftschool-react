@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
-import {
-  Paper,
-  Grid,
-  Button,
-  Typography,
-  TextField,
-  FormHelperText,
-} from '@material-ui/core';
-
 import { postCardRequest, getCardRequest } from '../../modules/Profile/actions';
 
+import { Grid, Button, Typography, TextField } from '@material-ui/core';
+import {
+  StyledPaper,
+  StyledIconContainer,
+  StyledButtonContainer,
+  StyledFormHelperText,
+} from './StyledProfile';
+import {
+  StyledBackgroundContainer,
+  StyledFormWithBackground,
+  StyledColumnForm,
+} from '../App/StyledApp';
+
 import logo from '../../common/mastercard.svg';
-import './Profile.css';
 
 class Profile extends React.Component {
   state = {
@@ -46,9 +49,9 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div className="login-form-container">
-        <div className="login-form container row align-items-center justify-content-center">
-          <div className="col col-sm-12 col-md-12 col-lg-10 col-xl-8 column-login-form mt-0">
+      <StyledBackgroundContainer>
+        <StyledFormWithBackground className="container row align-items-center justify-content-center">
+          <StyledColumnForm className="col col-sm-12 col-md-12 col-lg-10 col-xl-8 mt-0">
             <form onSubmit={this.handleSubmit}>
               <Grid
                 container
@@ -70,10 +73,10 @@ class Profile extends React.Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Paper className="card-paper" elevation={3}>
-                    <div className="material-icon">
+                  <StyledPaper elevation={3}>
+                    <StyledIconContainer>
                       <img src={logo} alt="Mastercard" width="32" />
-                    </div>
+                    </StyledIconContainer>
                     <NumberFormat
                       customInput={TextField}
                       type="text"
@@ -103,10 +106,10 @@ class Profile extends React.Component {
                       required
                       value={this.state.expiryDate || ''}
                     />
-                  </Paper>
+                  </StyledPaper>
                 </Grid>
                 <Grid item xs={6}>
-                  <Paper className="card-paper" elevation={3}>
+                  <StyledPaper elevation={3}>
                     <TextField
                       type="text"
                       name="cardName"
@@ -133,15 +136,15 @@ class Profile extends React.Component {
                       required
                       value={this.state.cvc || ''}
                     />
-                  </Paper>
+                  </StyledPaper>
                 </Grid>
               </Grid>
-              <div className="button-containter text-center">
-                <FormHelperText error={!this.state.hasCard}>
+              <StyledButtonContainer>
+                <StyledFormHelperText error={!this.state.hasCard}>
                   {this.state.hasCard
                     ? 'Everything is fine'
                     : 'Please enter your card number'}
-                </FormHelperText>
+                </StyledFormHelperText>
                 <Button
                   type="submit"
                   size="medium"
@@ -150,11 +153,11 @@ class Profile extends React.Component {
                 >
                   Save
                 </Button>
-              </div>
+              </StyledButtonContainer>
             </form>
-          </div>
-        </div>
-      </div>
+          </StyledColumnForm>
+        </StyledFormWithBackground>
+      </StyledBackgroundContainer>
     );
   }
 }

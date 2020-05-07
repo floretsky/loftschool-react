@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Select from 'react-select';
+import { StyledSelect } from './StyledOrder';
 import { Grid, Button, InputLabel, FormControl } from '@material-ui/core';
 
 import { getRouteRequest } from '../../modules/Route/actions';
@@ -24,8 +24,7 @@ const OrderForm = ({ getRouteRequest, addresses }) => {
         <Grid item xs={12}>
           <FormControl>
             <InputLabel shrink>From:</InputLabel>
-            <Select
-              className="route-input"
+            <StyledSelect
               name="routeFrom"
               value={routeFrom || ''}
               onChange={setFrom}
@@ -40,8 +39,7 @@ const OrderForm = ({ getRouteRequest, addresses }) => {
         <Grid item xs={12}>
           <FormControl>
             <InputLabel shrink>To:</InputLabel>
-            <Select
-              className="route-input"
+            <StyledSelect
               name="routeTo"
               value={routeTo || ''}
               onChange={setTo}

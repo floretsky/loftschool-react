@@ -3,20 +3,41 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  Button,
-  Grid,
-  Input,
-  FormHelperText,
-  Typography,
-} from '@material-ui/core';
+import { Form, Field } from 'react-final-form';
+import { Input } from '../Input/Input';
+import { Button, Grid, Typography } from '@material-ui/core';
 
+import { EMAIL_REGEX } from '../../const/index';
 import { postLoginRequest, postLoginSuccess } from '../../modules/Auth/actions';
+
+import {
+  StyledFormHelperText,
+  StyledButtonContainer,
+} from '../Auth/StyledAuth';
 
 class Login extends Component {
   state = {
     email: '',
     password: '',
+  };
+
+  validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+      errors.email = 'Please enter your email';
+    } else {
+      const match = values.email.match(EMAIL_REGEX);
+      if (!match) {
+        errors.email = 'Invalid email';
+      }
+    }
+
+    if (!values.password) {
+      errors.password = 'Please enter your password';
+    }
+
+    return errors;
   };
 
   componentDidMount() {
@@ -27,8 +48,9 @@ class Login extends Component {
     }
   }
 
-  handleChangeInput = (event) =>
+  handleChangeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  };
 
   handleSubmitForm = (event) => {
     event.preventDefault();
@@ -41,54 +63,60 @@ class Login extends Component {
     return isAuthorized ? (
       <Redirect to="/map" />
     ) : (
-      <form onSubmit={this.handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h4" paragraph>
-              Login
-            </Typography>
-            New user?{' '}
-            <a href="#register" onClick={() => changeState('register')}>
-              Sign up.
-            </a>
-          </Grid>
-          <Grid item xs={12}>
-            <Input
-              error={!!error}
-              type="text"
-              name="email"
-              placeholder="Enter email *"
-              onChange={this.handleChangeInput}
-              fullWidth
-              autoFocus
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Input
-              error={!!error}
-              type="password"
-              name="password"
-              placeholder="Enter password *"
-              onChange={this.handleChangeInput}
-              fullWidth
-              required
-            />
-          </Grid>
-        </Grid>
-        <div className="button-containter">
-          <FormHelperText error={!!error}>{error}</FormHelperText>
-          <Button
-            type="submit"
-            color="primary"
-            size="medium"
-            variant="contained"
-            onClick={this.handleSubmitForm}
-          >
-            Sign in
-          </Button>
-        </div>
-      </form>
+      <Form
+        onSubmit={this.handleSubmitForm}
+        validate={this.validate}
+        render={() => (
+          <form onSubmit={this.handleSubmitForm}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Typography variant="h4" paragraph>
+                  Login
+                </Typography>
+                New user?{' '}
+                <a href="#register" onClick={() => changeState('register')}>
+                  Sign up.
+                </a>
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="email"
+                  label="Email"
+                  type="email"
+                  placeholder="Enter email *"
+                  component={Input}
+                  onChange={this.handleChangeInput}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="Enter password *"
+                  component={Input}
+                  onChange={this.handleChangeInput}
+                  required
+                />
+              </Grid>
+            </Grid>
+            <StyledButtonContainer>
+              <StyledFormHelperText error={!!error}>
+                {error}
+              </StyledFormHelperText>
+              <Button
+                type="submit"
+                color="primary"
+                size="medium"
+                variant="contained"
+              >
+                Sign in
+              </Button>
+            </StyledButtonContainer>
+          </form>
+        )}
+      />
     );
   }
 }
