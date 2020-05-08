@@ -8,7 +8,7 @@ import { drawRoute } from './drawRoute';
 import { clearRoute } from '../../modules/Route/actions';
 import { ACCESS_TOKEN } from '../../const/index';
 
-import './Map.css';
+import { StyledMap, StyledMapContainer } from './StyledMap';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Map = ({ coords, isOrdered, clearRoute, history }) => {
@@ -43,19 +43,20 @@ const Map = ({ coords, isOrdered, clearRoute, history }) => {
   const reset = () => {
     map.removeLayer('route');
     map.removeSource('route');
+    map.removeLayer('point');
+    map.removeSource('point');
     clearRoute();
   };
 
   return (
     <>
-      <div className="map-container">
+      <StyledMapContainer>
         <Order history={history} reset={reset} isOrdered={isOrdered} />
-        <div
+        <StyledMap
           data-testid="map"
-          className="map"
           ref={(el) => (mapRefContainer.current = el)}
-        ></div>
-      </div>
+        ></StyledMap>
+      </StyledMapContainer>
     </>
   );
 };

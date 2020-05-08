@@ -6,9 +6,9 @@ import { postLogOut } from '../../modules/Auth/actions';
 import { clearCard } from '../../modules/Profile/actions';
 import { clearRoute } from '../../modules/Route/actions';
 
-import Button from '@material-ui/core/Button';
 import logo from '../../common/logo-black.svg';
-import './Header.css';
+import { Button } from '@material-ui/core';
+import { StyledHeader, StyledLogoWrapper } from './StyledHeader';
 
 const Header = ({ postLogOut, clearCard, clearRoute }) => {
   const handleSignOutClick = (event) => {
@@ -19,12 +19,12 @@ const Header = ({ postLogOut, clearCard, clearRoute }) => {
   };
 
   return (
-    <div id="header" data-testid="header">
-      <div className="logo-wrapper col-md-8">
+    <StyledHeader data-testid="header">
+      <StyledLogoWrapper className="col-md-8">
         <Link to="/">
           <img src={logo} alt="Logo" width="156" />
         </Link>
-      </div>
+      </StyledLogoWrapper>
       <nav className="navigation-panel col-md-4">
         <Button component={Link} to="/map" className="button map-button">
           Map
@@ -45,7 +45,7 @@ const Header = ({ postLogOut, clearCard, clearRoute }) => {
           Sign Out
         </Button>
       </nav>
-    </div>
+    </StyledHeader>
   );
 };
 

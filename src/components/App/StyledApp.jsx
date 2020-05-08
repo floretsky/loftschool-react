@@ -1,32 +1,31 @@
-.login-form-container {
+import styled from 'styled-components';
+import background from '../../common/login-background.jpg';
+
+export const StyledBackgroundContainer = styled.div`
   width: 100%;
   height: 100%;
-  background: url('../../common/login-background.jpg') no-repeat;
+  background: url(${background}) no-repeat;
   background-size: cover;
   position: relative;
-}
-.login-form-container:before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(50, 50, 53, 0.7);
-}
-.login-form {
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(50, 50, 53, 0.7);
+  }
+`;
+
+export const StyledFormWithBackground = styled.div`
   height: 100%;
   margin: auto !important;
-}
-.button-containter {
-  text-align: right;
-  margin-top: 5%;
-}
-.column-login-logo {
-  text-align: center;
-}
-.column-login-form {
+`;
+
+export const StyledColumnForm = styled.div`
   padding: 44px 60px !important;
   margin-top: 48px;
   margin-bottom: 48px;
@@ -37,7 +36,5 @@
   color: rgba(0, 0, 0, 0.87);
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   background-color: #fff;
-}
-.main-area .MuiFormHelperText-root {
-  bottom: auto;
-}
+`;
+

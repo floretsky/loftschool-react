@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Container, Grid, Button, Typography, Paper } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import OrderForm from './OrderForm';
 
-import './Order.css';
+import { StyledPaper, StyledButton } from './StyledOrder';
 
 const Order = ({ hasCard, isOrdered, reset }) => {
   const handleClick = () => {
@@ -28,8 +28,7 @@ const Order = ({ hasCard, isOrdered, reset }) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              className="button-link"
+            <StyledButton
               color="primary"
               size="medium"
               variant="contained"
@@ -38,7 +37,7 @@ const Order = ({ hasCard, isOrdered, reset }) => {
               to="/profile"
             >
               Go to profile
-            </Button>
+            </StyledButton>
           </Grid>
         </Grid>
       );
@@ -53,12 +52,11 @@ const Order = ({ hasCard, isOrdered, reset }) => {
           </Grid>
           <Grid item xs={12}>
             <Typography>
-              Your taxi is on its way. The car will arrive in 10 minutes.
+              Thank you for ordering LoftTaxi. Enjoy your ride!
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Button
-              className="button-link"
+            <StyledButton
               color="primary"
               size="medium"
               variant="contained"
@@ -66,7 +64,7 @@ const Order = ({ hasCard, isOrdered, reset }) => {
               onClick={handleClick}
             >
               New order
-            </Button>
+            </StyledButton>
           </Grid>
         </Grid>
       );
@@ -74,11 +72,11 @@ const Order = ({ hasCard, isOrdered, reset }) => {
     return <OrderForm />;
   };
   return (
-    <Paper className="paper-container" elevation={1}>
+    <StyledPaper elevation={1}>
       <Container>
         <OrderLayout />
       </Container>
-    </Paper>
+    </StyledPaper>
   );
 };
 
